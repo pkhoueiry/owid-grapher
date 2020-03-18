@@ -8,6 +8,7 @@ import { includes, guid, uniq, makeSafeForCSS } from "./Util"
 import { ChartConfig } from "./ChartConfig"
 import { Bounds } from "./Bounds"
 import { AxisBox, AxisGridLines } from "./AxisBox"
+import { AxisTickMarks } from "./AxisTickMarks"
 import { AxisScale } from "./AxisScale"
 import { VerticalAxis, VerticalAxisView } from "./VerticalAxis"
 import { NoData } from "./NoData"
@@ -418,6 +419,18 @@ export class StackedBarChart extends React.Component<{
         const { stackedData, xValues } = this.transform
         const { innerBounds } = axisBox
 
+        const textColor = "#666"
+
+        const tickMarks = true ? (
+            <AxisTickMarks
+                tickMarkTopPosition={innerBounds.bottom}
+                tickMarkXPositions={ticks.map(tick => tick.bounds.centerX)}
+                color={textColor}
+            />
+        ) : (
+            undefined
+        )
+
         return (
             <g className="StackedBarChart">
                 <defs>
@@ -446,6 +459,8 @@ export class StackedBarChart extends React.Component<{
                     bounds={innerBounds}
                 />
 
+                {tickMarks}
+
                 <g>
                     {ticks.map((tick, i) => {
                         return (
@@ -453,7 +468,7 @@ export class StackedBarChart extends React.Component<{
                                 key={i}
                                 x={tick.bounds.x}
                                 y={tick.bounds.y}
-                                fill="#666"
+                                fill={textColor}
                                 fontSize={this.tickFontSize}
                             >
                                 {tick.text}

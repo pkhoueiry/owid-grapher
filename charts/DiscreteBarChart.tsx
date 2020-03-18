@@ -252,7 +252,11 @@ export class DiscreteBarChart extends React.Component<{
                     opacity={0}
                     fill="rgba(255,255,255,0)"
                 />
-                <HorizontalAxisView bounds={bounds} axis={xAxis} />
+                <HorizontalAxisView
+                    bounds={bounds}
+                    axis={xAxis}
+                    axisPosition={innerBounds.bottom}
+                />
                 <AxisGridLines
                     orient="bottom"
                     scale={xScale}
