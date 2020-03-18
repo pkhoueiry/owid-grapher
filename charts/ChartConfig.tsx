@@ -1,10 +1,19 @@
-import { extend, map, filter, includes, uniqWith, isEqual } from "./Util"
 import { observable, computed, action, autorun, toJS, runInAction } from "mobx"
+import {
+    map,
+    includes,
+    isEqual,
+    defaultTo,
+    formatDay,
+    formatYear,
+    filter,
+    uniqWith,
+    extend
+} from "./Util"
 import { ComparisonLineConfig } from "./ComparisonLine"
 import { AxisConfig, AxisConfigProps } from "./AxisConfig"
 import { ChartType, ChartTypeType } from "./ChartType"
 import { ChartTabOption } from "./ChartTabOption"
-import { defaultTo, formatDay, formatYear } from "./Util"
 import { VariableData, DataForChart } from "./VariableData"
 import { ChartData } from "./ChartData"
 import { DimensionWithData } from "./DimensionWithData"
@@ -26,6 +35,7 @@ import { ChartDimension } from "./ChartDimension"
 import { TooltipProps } from "./Tooltip"
 import { LogoOption } from "./Logos"
 import { canBeExplorable } from "utils/charts"
+import { EPOCH_DATE } from "settings"
 
 declare const App: any
 declare const window: any
@@ -223,7 +233,7 @@ export class ChartConfig {
         if (!firstVar) return formatYear
 
         return firstVar.display.yearIsDay
-            ? (day: number) => formatDay(day, firstVar.display.zeroDay)
+            ? (day: number) => formatDay(day, EPOCH_DATE)
             : formatYear
     }
 
